@@ -4,9 +4,9 @@
 ?>
 <!DOCTYPE HTML>
 <html>
-	<head> 
+	<head>
 		<meta charset="utf-8">
-		<title> Упс( Что-то пошло не так </title>
+		<title> Упс Что-то пошло не так </title>
 		
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="style.css">
