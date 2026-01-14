@@ -1,7 +1,24 @@
 <?php
 	session_start();
 	include("../settings/connect_datebase.php");
-	
+	include("./recaptcha/autoload.php");
+
+	$secret = '6LcpJ0osAAAAAIiE6gM7C2ScJ2hIOGR5zvCBaB4-';
+
+	if (isset($_POST['g-recaptcha-response'])) {
+		$recaptcha = new \ReCaptcha\ReCaptcha($secret);
+
+		$resp = $recaptcha->verify(
+			$_POST['g-recaptcha-response'],
+			$_SERVER['REMOTE_ADDR']
+		);
+
+		if ($resp->isSuccess()) {echo "Авторизация прошла успешно.";
+		} else {echo "Пользователь не распознан.";}
+		}
+		else {echo "Нет ответа от RECAPTCHA.";
+	}
+
 	$login = $_POST['login'];
 	$password = $_POST['password'];
 	
