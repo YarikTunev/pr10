@@ -17,7 +17,7 @@
 	<head> 
 		<meta charset="utf-8">
 		<title> Регистрация </title>
-		<script src="https://www.google.com/recaptca/api.js" async defer></script>
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 		<script src="https://code.jquery.com/jquery-1.8.3.js"></script>
 		<link rel="stylesheet" href="style.css">
 	</head>
@@ -68,6 +68,12 @@
 				var _password = document.getElementsByName("_password")[0].value;
 				var _passwordCopy = document.getElementsByName("_passwordCopy")[0].value;
 				
+				var captcha = grecaptcha.getResponse();
+				if(captcha.lenght){
+					alert("Пройдите капчу");
+					return
+				}
+
 				if(_login != "") {
 					if(_password != "") {
 						if(_password == _passwordCopy) {
@@ -77,6 +83,7 @@
 							var data = new FormData();
 							data.append("login", _login);
 							data.append("password", _password);
+							data.append('g-recaptcha-response', captcha);
 							
 							// AJAX запрос
 							$.ajax({
