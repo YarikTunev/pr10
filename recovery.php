@@ -15,6 +15,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head> 
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 		<script src="https://code.jquery.com/jquery-1.8.3.js"></script>
 		<meta charset="utf-8">
 		<title> Восстановление пароля </title>
@@ -58,7 +59,10 @@
 					<div class = "sub-name">Почта (логин):</div>
 					<div style="font-size: 12px; margin-bottom: 10px;">На указанную вами почту будет выслан новый пароль, для входа в систему.</div>
 					<input name="_login" type="text" placeholder="E-mail@mail.ru"/>
-					
+
+					<center><div class="g-recaptcha" data-sitekey="6LcpJ0osAAAAAAqy0YWuOIocriPPK8GqehsLFmQk"></div></center>
+
+
 					<input type="button" class="button" value="Отправить" onclick="LogIn()" style="margin-top: 0px;"/>
 					<img src = "img/loading.gif" class="loading" style="margin-top: 0px;"/>
 				</div>
@@ -85,7 +89,11 @@
 			function EnableError() {
 				errorWindow.style.display = "block";
 			}
-			
+			var captcha = grecaptcha.getResponse();
+				if(captcha.lenght){
+					alert("Пройдите капчу");
+					return
+			}
 			function LogIn() {
 				var _login = document.getElementsByName("_login")[0].value;
 				loading.style.display = "block";
@@ -93,6 +101,7 @@
 				
 				var data = new FormData();
 				data.append("login", _login);
+				data.append('g-recaptcha-response', captcha);
 				
 				// AJAX запрос
 				$.ajax({
